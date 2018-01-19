@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>BubbleSort.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Guia de Desenvolvimento</a> &gt; <a href="index.source.html" class="el_package">algoritmos</a> &gt; <span class="el_source">BubbleSort.java</span></div><h1>BubbleSort.java</h1><pre class="source lang-java linenums">package algoritmos;
+
+<span class="nc" id="L3">public class BubbleSort {</span>
+
+	public static void main(String[] args) {
+<span class="nc" id="L6">		char[] dados1 = { 'H', 'A', 'F', 'D', 'B', 'I', 'C', 'G', 'K', 'E', 'J', 'L' };</span>
+<span class="nc" id="L7">		char[] dados2 = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L' };</span>
+<span class="nc" id="L8">		char[] dados3 = { 'L', 'K', 'J', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A' };</span>
+<span class="nc" id="L9">		char[] dados4 = new char[500];</span>
+<span class="nc bnc" id="L10" title="All 2 branches missed.">		for (int i = 0; i &lt; dados4.length; i++) {</span>
+<span class="nc" id="L11">			char c = (char) (65 + Math.round((Math.random() * 25)));</span>
+<span class="nc" id="L12">			dados4[i] = c;</span>
+		}
+<span class="nc" id="L14">		char[] dados5 = new char[250];</span>
+<span class="nc bnc" id="L15" title="All 2 branches missed.">		for (int i = 0; i &lt; dados5.length; i++) {</span>
+<span class="nc" id="L16">			char c = (char) (249-i);</span>
+<span class="nc" id="L17">			dados4[i] = c;</span>
+		}
+		
+<span class="nc" id="L20">		ordenar(dados1);</span>
+<span class="nc" id="L21">		ordenar(dados2);</span>
+<span class="nc" id="L22">		ordenar(dados3);</span>
+<span class="nc" id="L23">		ordenar(dados4);</span>
+<span class="nc" id="L24">		ordenar(dados5);</span>
+<span class="nc" id="L25">	}</span>
+
+	private static void ordenar(char[] dados) {
+<span class="nc" id="L28">		System.out.println(&quot;\n&quot;);</span>
+<span class="nc" id="L29">		System.out.println(dados);</span>
+
+<span class="nc" id="L31">		int esforco = 0;</span>
+<span class="nc bnc" id="L32" title="All 2 branches missed.">		for (int i = 0; i &lt; dados.length - 1; i++) {</span>
+<span class="nc bnc" id="L33" title="All 2 branches missed.">			for (int j = 0; j &lt; dados.length - 1; j++) {</span>
+<span class="nc" id="L34">				esforco++;</span>
+<span class="nc bnc" id="L35" title="All 2 branches missed.">				if (dados[j + 1] &lt; dados[j]) {</span>
+<span class="nc" id="L36">					char aux = dados[j];</span>
+<span class="nc" id="L37">					dados[j] = dados[j + 1];</span>
+<span class="nc" id="L38">					dados[j + 1] = aux;</span>
+				}
+			}
+		}
+
+<span class="nc" id="L43">		System.out.println(&quot;esforco: &quot; + esforco);</span>
+<span class="nc" id="L44">		System.out.println(dados);</span>
+<span class="nc" id="L45">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.4.201502262128</span></div></body></html>

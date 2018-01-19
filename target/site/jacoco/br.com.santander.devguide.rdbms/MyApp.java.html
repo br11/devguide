@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>MyApp.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Guia de Desenvolvimento</a> &gt; <a href="index.source.html" class="el_package">br.com.santander.devguide.rdbms</a> &gt; <span class="el_source">MyApp.java</span></div><h1>MyApp.java</h1><pre class="source lang-java linenums">package br.com.santander.devguide.rdbms;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
+
+import br.com.santander.devguide.rdbms.entity.MyDataBean;
+import br.com.santander.devguide.rdbms.entity.MyEntityBean;
+import br.com.santander.devguide.rdbms.entity.MyEntityDao;
+
+@SpringBootApplication
+// @ComponentScan(basePackages = &quot;br.com.santander.devguide.rdbms.entity&quot;)
+public class MyApp {
+
+	public static void main(String[] args) throws IOException {
+
+<span class="fc" id="L28">		SpringApplication app = new SpringApplication(MyApp.class);</span>
+
+<span class="fc" id="L30">		Properties properties = new Properties();</span>
+<span class="fc" id="L31">		properties.setProperty(&quot;spring.datasource.username&quot;,</span>
+<span class="fc" id="L32">				Files.lines(Paths.get(&quot;/etc/secret/dbuser&quot;)).findFirst().get());</span>
+<span class="fc" id="L33">		properties.setProperty(&quot;spring.datasource.password&quot;,</span>
+<span class="fc" id="L34">				Files.lines(Paths.get(&quot;/etc/secret/dbpass&quot;)).findFirst().get());</span>
+<span class="fc" id="L35">		app.setDefaultProperties(properties);</span>
+
+<span class="fc" id="L37">		System.out.println(properties);</span>
+
+<span class="fc" id="L39">		ConfigurableApplicationContext appCtx = app.run(args);</span>
+
+<span class="fc" id="L41">		MyApp service = appCtx.getBean(MyApp.class);</span>
+		//
+<span class="fc" id="L43">		Map&lt;String, String&gt; data = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L44">		data.put(&quot;id&quot;, &quot;1&quot;);</span>
+<span class="fc" id="L45">		data.put(&quot;text&quot;, &quot;some text&quot;);</span>
+<span class="fc" id="L46">		data.put(&quot;when&quot;, &quot;01/01/1970&quot;);</span>
+<span class="fc" id="L47">		data.put(&quot;amount&quot;, &quot;100.0&quot;);</span>
+<span class="fc" id="L48">		MyEntityBean entity = service.createRecord(data);</span>
+<span class="fc" id="L49">		System.out.println(entity);</span>
+		//
+<span class="fc" id="L51">		entity = service.readRecord(1L);</span>
+<span class="fc" id="L52">		System.out.println(entity);</span>
+
+<span class="fc" id="L54">		MyDataBean vo = service.readRecordData(1L);</span>
+<span class="fc" id="L55">		System.out.println(vo);</span>
+<span class="fc" id="L56">	}</span>
+
+	@SuppressWarnings({ &quot;unused&quot;, &quot;unchecked&quot; })
+	private static &lt;T&gt; T getParam(String[] args, String paramName, Class&lt;T&gt; type) {
+<span class="nc" id="L60">		T paramVal = null;</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">		for (String param : args) {</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">			if (param.startsWith(paramName + &quot;=&quot;)) {</span>
+<span class="nc" id="L63">				String tempVal = param.substring(paramName.length() + 1, param.length());</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">				if (type.equals(Long.class)) {</span>
+<span class="nc" id="L65">					paramVal = (T) Long.valueOf(tempVal);</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">				} else if (type.equals(Double.class)) {</span>
+<span class="nc" id="L67">					paramVal = (T) Double.valueOf(tempVal);</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">				} else if (type.equals(Integer.class)) {</span>
+<span class="nc" id="L69">					paramVal = (T) Integer.valueOf(tempVal);</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">				} else if (type.equals(Date.class)) {</span>
+					try {
+<span class="nc" id="L72">						paramVal = (T) df.parse(tempVal);</span>
+<span class="nc" id="L73">					} catch (ParseException e) {</span>
+<span class="nc" id="L74">						throw new RuntimeException(e);</span>
+<span class="nc" id="L75">					}</span>
+				}
+			}
+		}
+
+<span class="nc" id="L80">		return paramVal;</span>
+	}
+
+<span class="fc" id="L83">	private static SimpleDateFormat df = new SimpleDateFormat(&quot;dd/MM/yyyy&quot;);</span>
+
+	@Autowired
+	private MyEntityDao dao;
+
+<span class="fc" id="L88">	public MyApp() {</span>
+<span class="fc" id="L89">	}</span>
+
+	MyEntityBean createRecord(Map&lt;String, String&gt; data) {
+		try {
+			//
+<span class="fc" id="L94">			Long id = Long.valueOf(data.get(&quot;id&quot;));</span>
+<span class="fc" id="L95">			String text = data.get(&quot;text&quot;);</span>
+<span class="fc" id="L96">			Date when = df.parse(data.get(&quot;when&quot;));</span>
+<span class="fc" id="L97">			Double amount = Double.valueOf(data.get(&quot;amount&quot;));</span>
+			//
+<span class="fc" id="L99">			MyEntityBean entity = new MyEntityBean(id, text, when, amount);</span>
+			//
+<span class="fc" id="L101">			return dao.save(entity);</span>
+<span class="nc" id="L102">		} catch (ParseException e) {</span>
+<span class="nc" id="L103">			throw new RuntimeException(e);</span>
+		}
+	}
+
+	MyEntityBean readRecord(Long id) {
+<span class="fc" id="L108">		return dao.find(id);</span>
+	}
+
+	MyDataBean readRecordData(Long id) {
+<span class="fc" id="L112">		return dao.retrieveData(id);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.4.201502262128</span></div></body></html>

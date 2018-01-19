@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>QuickSort.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Guia de Desenvolvimento</a> &gt; <a href="index.source.html" class="el_package">algoritmos</a> &gt; <span class="el_source">QuickSort.java</span></div><h1>QuickSort.java</h1><pre class="source lang-java linenums">package algoritmos;
+
+<span class="nc" id="L3">public class QuickSort {</span>
+
+<span class="nc" id="L5">	static int esforco = 0;</span>
+<span class="nc" id="L6">	static int vezes = 0;</span>
+
+	public static void main(String[] args) {
+<span class="nc" id="L9">		char[] dados1 = { 'H', 'A', 'F', 'D', 'B', 'I', 'C', 'G', 'K', 'E', 'J', 'L' };</span>
+<span class="nc" id="L10">		char[] dados2 = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L' };</span>
+<span class="nc" id="L11">		char[] dados3 = { 'L', 'K', 'J', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A' };</span>
+<span class="nc" id="L12">		char[] dados4 = new char[500];</span>
+<span class="nc bnc" id="L13" title="All 2 branches missed.">		for (int i = 0; i &lt; dados4.length; i++) {</span>
+<span class="nc" id="L14">			char c = (char) (65 + Math.round((Math.random() * 25)));</span>
+<span class="nc" id="L15">			dados4[i] = c;</span>
+		}
+<span class="nc" id="L17">		char[] dados5 = new char[250];</span>
+<span class="nc bnc" id="L18" title="All 2 branches missed.">		for (int i = 0; i &lt; dados5.length; i++) {</span>
+<span class="nc" id="L19">			char c = (char) (249-i);</span>
+<span class="nc" id="L20">			dados4[i] = c;</span>
+		}
+		
+<span class="nc" id="L23">		ordenar(dados1);</span>
+
+<span class="nc" id="L25">		ordenar(dados2);</span>
+
+<span class="nc" id="L27">		ordenar(dados3);</span>
+
+<span class="nc" id="L29">		ordenar(dados4);</span>
+
+<span class="nc" id="L31">		ordenar(dados5);</span>
+<span class="nc" id="L32">	}</span>
+
+	static void ordenar(char[] dados) {
+<span class="nc" id="L35">		System.out.println(&quot;\n&quot;);</span>
+<span class="nc" id="L36">		esforco = 0;</span>
+<span class="nc" id="L37">		vezes = 0;</span>
+<span class="nc" id="L38">		System.out.println(dados);</span>
+<span class="nc" id="L39">		ordenar(dados, 0, dados.length - 1);</span>
+<span class="nc" id="L40">		System.out.println(&quot;vezes: &quot; + vezes);</span>
+<span class="nc" id="L41">		System.out.println(&quot;esforco: &quot; + esforco);</span>
+<span class="nc" id="L42">		System.out.println(dados);</span>
+<span class="nc" id="L43">	}</span>
+
+	static void ordenar(char[] dados, int inicio, int end) {
+
+<span class="nc bnc" id="L47" title="All 2 branches missed.">		if (inicio &gt;= end) {</span>
+<span class="nc" id="L48">			return;</span>
+		}
+<span class="nc" id="L50">		vezes++;</span>
+<span class="nc" id="L51">		int pivot = end;</span>
+<span class="nc" id="L52">		int wall = inicio;</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">		for (int i = inicio; i &lt; end; i++) {</span>
+<span class="nc" id="L54">			esforco++;</span>
+<span class="nc bnc" id="L55" title="All 2 branches missed.">			if (dados[i] &lt; dados[pivot]) {</span>
+<span class="nc" id="L56">				char troca = dados[wall];</span>
+<span class="nc" id="L57">				dados[wall] = dados[i];</span>
+<span class="nc" id="L58">				dados[i] = troca;</span>
+<span class="nc" id="L59">				wall++;</span>
+			}
+		}
+
+<span class="nc" id="L63">		char troca = dados[wall];</span>
+<span class="nc" id="L64">		dados[wall] = dados[pivot];</span>
+<span class="nc" id="L65">		dados[pivot] = troca;</span>
+
+<span class="nc" id="L67">		ordenar(dados, inicio, wall - 1);</span>
+<span class="nc" id="L68">		ordenar(dados, wall + 1, end);</span>
+<span class="nc" id="L69">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.4.201502262128</span></div></body></html>
